@@ -33,9 +33,11 @@
                         <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                       </div>
                     </div><!-- /.box-header -->
-                    <div class="box-body" style="overflow-y: scroll !important; overflow-x: hidden !important; height: 500px !important;">
+                    <div class="box-body" style="overflow-y: scroll !important; overflow-x: hidden !important; height: 250px !important;">
                       <!-- Conversations are loaded here -->
-                      <div class="direct-chat-messages" ng-repeat="chat in chats">
+                      <div class="direct-chat-messages" >
+
+                        <div ng-repeat="chat in chats">
 
                         <div class="direct-chat-msg" ng-if="chat.member=='People'" style="margin: 5px !important;">
                           <div class="direct-chat-info clearfix">
@@ -56,6 +58,8 @@
                           <img class="direct-chat-img" src="{{url_for('static', filename='dist/img/user1-128x128.jpg')}}" alt="message user image"><!-- /.direct-chat-img -->
                           <div class="direct-chat-text">##chat.message##</div><!-- /.direct-chat-text -->
                         </div><!-- /.direct-chat-msg -->
+
+                      </div>
 
                         
 

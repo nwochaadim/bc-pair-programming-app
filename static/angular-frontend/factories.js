@@ -1,13 +1,14 @@
 angular.module("app.factories", [])
 
-	.factory("users", function($firebaseObject, $firebaseArray){
+	.factory("users", function($firebaseObject, $firebaseArray, $rootScope){
 		factory = {}
 		var ref = new Firebase("https://codeconnect.firebaseio.com/")
+		var users = $firebaseArray(ref.child("my-users"))
 
 
 		ref.onAuth(function(authData){
 			if(authData){
-				console.log("UID: "+authData.password.email.replace(/@.*/, ''))
+				$rootScope.uid = authData.uid
 			}
 
 			else{

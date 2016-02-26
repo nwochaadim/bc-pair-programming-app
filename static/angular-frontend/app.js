@@ -21,7 +21,8 @@ angular.module('app', ['ui.router', 'app.controllers', 'app.factories', 'firebas
 					},
 
 					'headerView': {
-						templateUrl: '/head'
+						templateUrl: '/head',
+						controller: 'headerController'
 					},
 
 					'mainContentView': {
@@ -45,7 +46,8 @@ angular.module('app', ['ui.router', 'app.controllers', 'app.factories', 'firebas
 					},
 
 					'headerView': {
-						templateUrl: '/head'
+						templateUrl: '/head',
+						controller: 'headerController'
 					},
 
 					'mainContentView': {
@@ -60,5 +62,5 @@ angular.module('app', ['ui.router', 'app.controllers', 'app.factories', 'firebas
 
 
 
-		$urlRouterProvider.otherwise('/app/collab'); 
+		$urlRouterProvider.otherwise('/app/home'); 
 	})

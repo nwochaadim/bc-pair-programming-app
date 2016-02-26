@@ -105,8 +105,7 @@
                           <div class="form-group">
                             <label>Add Members</label>
                             <select class="form-control select2" style="width: 100%;" ng-model="data.members" multiple>
-                              <option selected="selected">Member 1</option>
-                              <option>Member 2</option>
+                             <option ng-repeat="user in users"value="##user.member##">##user.name##</option>
                             </select>
                           </div><!-- /.form-group -->
 

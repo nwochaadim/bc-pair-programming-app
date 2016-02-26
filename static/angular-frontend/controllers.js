@@ -1,5 +1,15 @@
 angular.module("app.controllers", [])
 
+  .controller('headerController', function($scope, users, $rootScope){
+    $scope.users = users.get()
+     angular.forEach($scope.users, function(user){
+        if(user.uid==$rootScope.uid){
+          $scope.currentMember = user.name
+        }
+      })
+
+  })
+
 	 .controller('SidebarController', function($scope, $rootScope, users){
     $scope.users = users.get()
 
@@ -11,28 +21,49 @@ angular.module("app.controllers", [])
   })
 
    .controller('MainContentController', function($scope, users, $rootScope, $cookies){
-      
+
       $scope.users = users.get()
       firepadRef = users.getFirePadRef()
 
       $scope.data = {};
       $scope.data.members = []
-      $scope.sessions = users.getSessions();
+      var sessions = users.getSessions();
+      
+      $scope.sessions = []
+
+      var del = true
+
+      angular.forEach($scope.users, function(user){
+        if(user.uid==$rootScope.uid){
+          $rootScope.currentMember = user.name
+          $scope.currentMember = user.name
+        }
+      })
+
+      angular.forEach(sessions, function(item){
+        
+        angular.forEach(item.members, function(member){
+
+          if(member==$rootScope.currentMember){
+              del = false
+            
+          }
+        })
+
+        if(!del){
+            $scope.sessions.push(item)
+            del = true
+        }
+
+      })
 
       var session_keys = users.getSessionKeys();
-
-      
-      
 
       session_keys.child("hel").once("value", function(snapshot){
         console.log("Session Key is: "+snapshot.val())
       })
 
-      
-
       $scope.saveSessionChanges = function(){
-
-
 
           $scope.sessions.$add({name: $scope.data.session_name, language: $scope.data.language, members: $scope.data.members, chats: [{timestamp: 0, message: '', member: ''}]})
           .then(function(ref){
