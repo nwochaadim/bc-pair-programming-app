@@ -98,32 +98,32 @@
 
 
         $('#my-form').on("submit", function(e){
-          e.preventDefault();
+           e.preventDefault();
 
-         var name = $('#name').val()
-       var email = $('#email').val()
-        var password = $('#password').val()
-        var repassword = $('#re-password').val()
+           var name = $('#name').val()
+           var email = $('#email').val()
+           var password = $('#password').val()
+           var repassword = $('#re-password').val()
 
         
-        if (password == repassword){
+            if (password == repassword){
 
-            ref.createUser({
-              email    : email,
-              password : password
-          }, function(error, authData) {
-            if (error) {
-              console.log("Error creating user:", error);
-            } else {
+                ref.createUser({
+                  email    : email,
+                  password : password
+              }, function(error, authData) {
+                if (error) {
+                  console.log("Error creating user:", error);
+                } else {
 
-                
-                var user = {name: name, email: email, uid: authData.uid}
-                ref.child("my-users").push().update(user)
+                    
+                    var user = {name: name, email: email, uid: authData.uid}
+                    ref.child("my-users").push().update(user)
 
-                window.location = '/'
+                    window.location = '/'
+                }
+              });
             }
-          });
-        }
 
 
 

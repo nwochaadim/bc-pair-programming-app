@@ -25,11 +25,12 @@ angular.module("app.controllers", [])
       $scope.users = users.get()
       firepadRef = users.getFirePadRef()
 
+      var sessions = users.getSessions();
       $scope.data = {};
       $scope.data.members = []
-      var sessions = users.getSessions();
+      $scope.sessions = users.getSessions();
       
-      $scope.sessions = []
+     
 
       var del = true
 
@@ -93,7 +94,7 @@ angular.module("app.controllers", [])
             enableLiveAutocompletion: false
         });
 
-        //$scope.chats = users.getChats($rootScope.session_keys['Inter']);
+        
 
         var sendChats = $('#sendChats');
         var chatForm = $('#chatForm');
@@ -105,15 +106,8 @@ angular.module("app.controllers", [])
         session_key.once("value", function(snapshot){
             $scope.currentKey = snapshot.val()
             $scope.chats = users.getChats($scope.currentKey)
-           // $scope.chats.$add({timestamp: 9, message: 'Hello', member: 'People'})
-
-            
+           
         })
-
-       
-
-       
-        //chats.$add({timestamp: 5, message: 'Hey', member: 'Me'})
 
 
         chatForm.on("submit", function(e){
@@ -122,27 +116,13 @@ angular.module("app.controllers", [])
           chatMessage.val('');
 
           var d = new Date();
-
-
-
           $scope.chats.$add({timestamp: d.getTime(), message: chat, member: 'people'})
-
-
 
         })
 
         var firepadRef = users.getFirePadRef();
-        
-
         var sessions = firepadRef.child("sessions");
-
-
-
         var firepad = Firepad.fromACE(firepadRef, editor);
-        
-
-       
-
         firepad.setUserId("session1234")
 
 

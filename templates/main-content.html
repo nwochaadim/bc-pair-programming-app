@@ -28,7 +28,7 @@
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="#" class="small-box-footer">Add New Code Session <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer" >Add New Code Session <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
           </div><!-- /.row -->
@@ -52,7 +52,7 @@
                       
                       <td>##session.name##    
                         <div class="btn-group" style="margin-left: 20px;">
-                          <button type="button" class="btn btn-info"  data-toggle="tooltip" title="View Current Code Session"><i class="glyphicon glyphicon-eye-open"></i></button>
+                          <button type="button" class="btn btn-info"  data-toggle="tooltip" title="View Current Code Session" ui-sref="app.collab"><i class="glyphicon glyphicon-eye-open"></i></button>
                           <button type="button" class="btn btn-info" data-toggle="tooltip" title="Invite Member to Code Session"><i class="glyphicon glyphicon-user"></i></button>
                           <button type="button" class="btn btn-info" data-toggle="tooltip" title="Delete Present Session"><i class="glyphicon glyphicon-remove"></i></button>
                         </div>
@@ -108,11 +108,6 @@
                              <option ng-repeat="user in users"value="##user.member##">##user.name##</option>
                             </select>
                           </div><!-- /.form-group -->
-
-
-
-
-
 
                       </div>
                       <div class="modal-footer">

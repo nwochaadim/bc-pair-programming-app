@@ -45,9 +45,6 @@ angular.module("app.factories", [])
 		 	return ref.child("session_keys").child(session_name)
 		 }
 
-
-
-
 		 return factory
 		 
 
