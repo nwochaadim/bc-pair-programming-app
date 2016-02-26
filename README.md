@@ -9,7 +9,7 @@ This app allows techies to colloborate in real time on the same code and also sh
   - Allows users to be able to invite other users of the application to my pair programming session
   - Allows users to be able to chat with other users
   - Code editor window has support for languages such as: HTML, Javascript, Python etc.
-  - 
+  
 ### Tech
 
 bc-pair-programming-app uses a number of open source projects to work properly:
