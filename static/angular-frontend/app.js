@@ -1,6 +1,8 @@
-angular.module('app', ['ui.router', 'app.controllers'])
+angular.module('app', ['ui.router', 'app.controllers', 'app.factories', 'firebase', 'ngCookies'])
 
-	.config(function($stateProvider, $urlRouterProvider){
+	.config(function($stateProvider, $urlRouterProvider, $interpolateProvider){
+		$interpolateProvider.startSymbol('##');
+    	$interpolateProvider.endSymbol('##');
 		$stateProvider
 			
 			.state('app', {
@@ -14,7 +16,8 @@ angular.module('app', ['ui.router', 'app.controllers'])
 				views: {
 
 					'sideBarView': {
-						templateUrl: '/side'
+						templateUrl: '/side',
+						controller: 'SidebarController'
 					},
 
 					'headerView': {
@@ -22,7 +25,32 @@ angular.module('app', ['ui.router', 'app.controllers'])
 					},
 
 					'mainContentView': {
-						templateUrl: '/content'
+						templateUrl: '/content',
+						controller: 'MainContentController'
+					}
+					
+
+
+				}
+			})
+
+
+			.state('app.collab', {
+				url: '/collab',
+				views: {
+
+					'sideBarView': {
+						templateUrl: '/side',
+						controller: 'SidebarController'
+					},
+
+					'headerView': {
+						templateUrl: '/head'
+					},
+
+					'mainContentView': {
+						templateUrl: '/collabview',
+						controller: 'CollabViewController'
 					}
 					
 
@@ -30,5 +58,7 @@ angular.module('app', ['ui.router', 'app.controllers'])
 				}
 			});
 
-		$urlRouterProvider.otherwise('/app/home'); 
+
+
+		$urlRouterProvider.otherwise('/app/collab'); 
 	})

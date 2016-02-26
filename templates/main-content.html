@@ -3,12 +3,11 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Dashboard
-            <small>Control panel</small>
+            Chat Panel
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
+            <li><a href="#" class="active"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#" ui-sref="app.collab">Collaborate</a></li>
           </ol>
         </section>
 
@@ -18,30 +17,18 @@
           <div class="row">
             
            
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-yellow">
-                <div class="inner">
-                  <h3>44</h3>
-                  <p>User Registrations</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
+          
             <div class="col-lg-3 col-xs-6">
               <!-- small box -->
               <div class="small-box bg-red">
                 <div class="inner">
-                  <h3>65</h3>
-                  <p>Unique Visitors</p>
+                  <h3>1</h3>
+                  <p>Coding Session</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer">Add New Code Session <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
           </div><!-- /.row -->
@@ -54,38 +41,95 @@
                   <h3 class="box-title">Coding Sessions and Members</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table class="table table-bordered">
-                    <tr>
+                  <table class="table table-bordered table-striped">
+                    <tr class="success">
                       
                       <th style="width: 40%">Coding sessions </th>
                       <th style="width: 40%">Members Involved</th>
                       <th style="width: 20%">Coding Language</th>
                     </tr>
-                    <tr>
+                    <tr ng-repeat="session in sessions">
                       
-                      <td>Update software   <button class="btn btn-primary btn-sm"><span class="glyphicons glyphicons-edit"></span></button></td>
-                      <td>
-                       <span class="label label-info">User 1</span> <span class="label label-info">User 2</span>
+                      <td>##session.name##    
+                        <div class="btn-group" style="margin-left: 20px;">
+                          <button type="button" class="btn btn-info"  data-toggle="tooltip" title="View Current Code Session"><i class="glyphicon glyphicon-eye-open"></i></button>
+                          <button type="button" class="btn btn-info" data-toggle="tooltip" title="Invite Member to Code Session"><i class="glyphicon glyphicon-user"></i></button>
+                          <button type="button" class="btn btn-info" data-toggle="tooltip" title="Delete Present Session"><i class="glyphicon glyphicon-remove"></i></button>
+                        </div>
                       </td>
-                      <td><span class="badge bg-red">55%</span></td>
+                      <td>
+                       <span class="label label-info" ng-repeat="member in session.members">##member##</span>
+                      </td>
+                      <td><span class="badge bg-red">##session.language##</span></td>
                     </tr>
                   
                     
                   </table>
                 </div><!-- /.box-body -->
+
                 <div class="box-footer clearfix">
-                  <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                  </ul>
+                  <button type="button" class="btn btn-inverse pull-right"  data-toggle="tooltip" title="Add New Code Session" ng-click="openSessionModal()"><i class="glyphicon glyphicon-plus" ></i></button>
                 </div>
+
+
+                <!-- Modal -->
+                <div class="modal modal-inverse fade" id="myModal" role="dialog">
+                  <div class="modal-dialog">
+                  
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+                          <div class="form-group">
+                            <label>Code Session: </label>
+                            <input type="text" ng-model="data.session_name" placeholder="Name of Coding Session" style="width: 100%"/>
+                          </div><!-- /.form-group -->
+
+
+                          <div class="form-group">
+                            <label>Code Language</label>
+                            <select class="form-control select2" style="width: 100%;" ng-model="data.language">
+                              <option selected="selected" value="python">Python</option>
+                              <option value="javascript">Javascript</option>
+                              <option value="html">HTML</option>
+                              <option value="sql">SQL</option>
+                              <option value="css">CSS</option>
+                              <option value="ruby">Ruby</option>
+                            </select>
+                          </div><!-- /.form-group -->
+
+                          <div class="form-group">
+                            <label>Add Members</label>
+                            <select class="form-control select2" style="width: 100%;" ng-model="data.members" multiple>
+                              <option selected="selected">Member 1</option>
+                              <option>Member 2</option>
+                            </select>
+                          </div><!-- /.form-group -->
+
+
+
+
+
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveSessionChanges()">Create</button>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+  
+
               </div><!-- /.box -->
             </div>
 
           </div>
+        </section>
 
        
             

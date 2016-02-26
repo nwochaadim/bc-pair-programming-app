@@ -1,5 +1,8 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, make_response
+from firebase import firebase
+
 app = Flask(__name__)
+
 
 
 @app.route('/',  methods=['GET', 'POST'])
@@ -9,8 +12,13 @@ def index():
     		return redirect(url_for('welcome'))
     return render_template('login.html')
 
+@app.route('/user/<id>')
+def get_user(id):
+    response = make_response(redirect('/welcome'))
+    response.set_cookie('user', id, max_age=30*24*60*60)
+    return response
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     return render_template('register.html')
 
@@ -37,6 +45,10 @@ def side():
 @app.route('/content')
 def content():
     return render_template('main-content.html')
+
+@app.route('/collabview')
+def collab():
+    return render_template('collab-view.html')
 
 
 

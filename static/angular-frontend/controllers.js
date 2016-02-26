@@ -1,113 +1,125 @@
 angular.module("app.controllers", [])
 
-	.controller("AppController", function($scope, fmSvc){
-		$scope.items = [];
-		$('.panel.panel-primary').click(function(){
-			$('.panel.panel-primary').removeClass("glow");
-			$(this).addClass("glow");
-		})
+	 .controller('SidebarController', function($scope, $rootScope, users){
+    $scope.users = users.get()
 
-		 $scope.currentStep = 1;
-          
+    setTimeout(function(){
+            $('#online-mem').removeClass('active')
+            $('#session').addClass('active')
+        }, 600)
+
+  })
+
+   .controller('MainContentController', function($scope, users, $rootScope, $cookies){
+      
+      $scope.users = users.get()
+      firepadRef = users.getFirePadRef()
+
+      $scope.data = {};
+      $scope.data.members = []
+      $scope.sessions = users.getSessions();
+
+      var session_keys = users.getSessionKeys();
 
       
-          $('.slider.range-min, .sl1, .sl2').slider({
-				range: "min",
-				min:4,
-				max: 25,
-					slide: function( event, ui ) {
-			        //$('.slider.range-min > a.ui-slider-handle').html("<div class='range-tooltip'>$ " + $(".slider.range-min").slider("value") + "</div>")
-			        $(this).find('.num-max').html($(this).slider("value") + "px")
-			        if($(this).slider("value") > 1){
-			        	$(this).addClass('active');
-			        } else {
-			        	$(this).removeClass('active');
-			        }
-			      },
-			    value:10
-			});
+      
 
-          $scope.loadCharacterScene = function(){
-            $scope.items = [];
-          	fmSvc.get("phpscripts/scan.php?lookup=../files/Character-Scenes").then(function(data){
-                $scope.items = data;
-          	})
-          }
+      session_keys.child("hel").once("value", function(snapshot){
+        console.log("Session Key is: "+snapshot.val())
+      })
 
-          $scope.loadTypoScene = function(){
-          	fmSvc.get("phpscripts/scan.php?lookup=../files/Typography-Scenes").then(function(data){
-          		$scope.items = data;
-          	})
-          }
+      
 
-          $scope.loadUserScene = function(){
-          	fmSvc.get("phpscripts/scan.php?lookup=../files/User-Scenes").then(function(data){
-          		$scope.items = data;
-          	})
-          }
-
-          $scope.navigateForward = function(url){
-          	
-          	fmSvc.get("phpscripts/scan.php?lookup="+url).then(function(data){
-
-          		$scope.items = data;
-          	})
-          }
-
-          $scope.closeModal = function(){
-          
-          	$("#myModal").modal('hide');
-
-          	
-          }
+      $scope.saveSessionChanges = function(){
 
 
-          $('[data-toggle="tooltip"]').tooltip(); 
-          $("a[rel^='prettyPhoto']").prettyPhoto();
 
-          //Fix Modal Scroll Issues
+          $scope.sessions.$add({name: $scope.data.session_name, language: $scope.data.language, members: $scope.data.members, chats: [{timestamp: 0, message: '', member: ''}]})
+          .then(function(ref){
+              session = {}
+              session[$scope.data.session_name] = ref.key()
+              session_keys.update(session)
+          })
+      }
 
-        $(document).on('hidden.bs.modal', '.modal', function () {
-              $('.modal:visible').length && $(document.body).addClass('modal-open');
+      $scope.openSessionModal = function(){
+          $("#myModal").modal("show")
+      }
+     
+     
 
-          });
+  })
 
-        //Fix Modal BackDrop Issue
+   .controller('CollabViewController', function($scope, users, $rootScope){
+        ace.require("ace/ext/language_tools");
+        var editor = ace.edit("editor");
+        editor.session.setMode("ace/mode/html");
+        editor.setTheme("ace/theme/tomorrow");
+        // enable autocompletion and snippets
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: false
+        });
 
-        $(document).on('show.bs.modal', '.modal', function () {
-               
+        //$scope.chats = users.getChats($rootScope.session_keys['Inter']);
 
-              var zIndex = 1040 + (10 * $('.modal:visible').length);
-              $(this).css('z-index', zIndex);
-              setTimeout(function() {
-                  $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
-              }, 0);
-          });
+        var sendChats = $('#sendChats');
+        var chatForm = $('#chatForm');
+        var chatMessage = $('#chatMessage')
 
-          $scope.implementPop = function(path, $event){
+        var session_key = users.getCurrentKey("test2");
+        
 
-            path = path.substring(3, path.length);
-            angular.element($event.currentTarget).popover({
-                    content: ' <div>'+
-                                        '<a href="" >Add</a><br/>'+
-                                        '<a href="'+path+'" rel="prettyPhoto">Preview</a>'+
-                                        
-                              '</div>',
-                    placement: 'bottom',
-                    trigger: 'focus',
-                    viewport: '#characterContents'
+        session_key.once("value", function(snapshot){
+            $scope.currentKey = snapshot.val()
+            $scope.chats = users.getChats($scope.currentKey)
+           // $scope.chats.$add({timestamp: 9, message: 'Hello', member: 'People'})
 
-                  }).popover('show').on('shown.bs.popover', function(){
-                         $("a[rel^='prettyPhoto']").prettyPhoto();
+            
+        })
 
-                  });
-          }
+       
 
-         
-          
+       
+        //chats.$add({timestamp: 5, message: 'Hey', member: 'Me'})
 
-});
 
- 
+        chatForm.on("submit", function(e){
+          e.preventDefault();
+          var chat = chatMessage.val()
+          chatMessage.val('');
+
+          var d = new Date();
+
+
+
+          $scope.chats.$add({timestamp: d.getTime(), message: chat, member: 'people'})
+
+
+
+        })
+
+        var firepadRef = users.getFirePadRef();
+        
+
+        var sessions = firepadRef.child("sessions");
+
+
+
+        var firepad = Firepad.fromACE(firepadRef, editor);
+        
+
+       
+
+        firepad.setUserId("session1234")
+
+
+
+   })
+
+
+
+
            
 

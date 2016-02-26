@@ -1,0 +1,120 @@
+<!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper" style="z-index: 9999 !important;">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Home
+            <small>Control panel</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#" ui-sref="app.home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Colloborate</li>
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+
+            <div class="col-lg-8">
+              <pre id="editor"></pre>
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="box box-warning direct-chat direct-chat-warning">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Direct Chat</h3>
+                      <div class="box-tools pull-right">
+                        <span data-toggle="tooltip" title="3 New Messages" class="badge bg-yellow">3</span>
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle"><i class="fa fa-comments"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                      </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body" style="overflow-y: scroll !important; overflow-x: hidden !important; height: 500px !important;">
+                      <!-- Conversations are loaded here -->
+                      <div class="direct-chat-messages" ng-repeat="chat in chats">
+
+                        <div class="direct-chat-msg" ng-if="chat.member=='People'" style="margin: 5px !important;">
+                          <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-left">##chat.member##</span>
+                            <span class="direct-chat-timestamp pull-right">##chat.timestamp | date: 'd MMM hh:mm a'##</span>
+                          </div><!-- /.direct-chat-info -->
+                          <img class="direct-chat-img" src="{{url_for('static', filename='dist/img/user1-128x128.jpg')}}" alt="message user image"><!-- /.direct-chat-img -->
+                          <div class="direct-chat-text">##chat.message##</div><!-- /.direct-chat-text -->
+                        </div><!-- /.direct-chat-msg -->
+                        
+
+                        <!-- Message to the right -->
+                        <div class="direct-chat-msg right" ng-if="chat.member!='People'" style="margin: 5px !important;">
+                          <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-right">##chat.member##</span>
+                            <span class="direct-chat-timestamp pull-left">##chat.timestamp | date: 'd MMM hh:mm a'##</span>
+                          </div><!-- /.direct-chat-info -->
+                          <img class="direct-chat-img" src="{{url_for('static', filename='dist/img/user1-128x128.jpg')}}" alt="message user image"><!-- /.direct-chat-img -->
+                          <div class="direct-chat-text">##chat.message##</div><!-- /.direct-chat-text -->
+                        </div><!-- /.direct-chat-msg -->
+
+                        
+
+                      </div><!--/.direct-chat-messages-->
+
+                      <!-- Contacts are loaded here -->
+                      <div class="direct-chat-contacts">
+
+                        <ul class="contacts-list" ng-repeat="member in members">
+                          <li>
+                            <a href="#">
+                              <img class="contacts-list-img" src="{{url_for('static', filename='dist/img/user1-128x128.jpg')}}">
+                              <div class="contacts-list-info">
+                                <span class="contacts-list-name">
+                                  ##member.name##
+                                  <small class="contacts-list-date pull-right">##member.date##</small>
+                                </span>
+                                
+                              </div><!-- /.contacts-list-info -->
+                            </a>
+                          </li><!-- End Contact Item -->
+                        </ul><!-- /.contatcts-list -->
+
+
+                      </div><!-- /.direct-chat-pane -->
+
+                    </div><!-- /.box-body -->
+
+
+                    <div class="box-footer">
+
+                      <form action="#" method="post" id="chatForm">
+                        <div class="input-group">
+                          <input type="text" name="message" placeholder="Type Message ..." class="form-control" id="chatMessage">
+                          <span class="input-group-btn">
+                            <button type="submit" class="btn btn-warning btn-flat" id="sendChats">Send</button>
+                          </span>
+                        </div>
+                      </form>
+
+                    </div><!-- /.box-footer-->
+                  </div><!--/.direct-chat -->
+
+               
+                      
+
+            </div><!--col-in-row-->
+            
+           
+          
+
+          </div>
+           
+
+
+        </section>
+
+
+
+       
+            
+      </div><!-- /.content-wrapper -->
